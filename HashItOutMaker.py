@@ -6,7 +6,7 @@
 #Last Edited 4/20/26
 #Sorry for the late. Been crazy couple of weeks.
 
-#Iteration 4: the even final linked list hash table 
+#Iteration 5: the bad Linear Probing Table
 
 from HashStatistics import HashStatistics
 from DataReader import loadData
@@ -25,8 +25,7 @@ quoteHashTable = [None] * 15000
 
 
 
-#This class defines the Node for the linked list method
-#parameters: 
+#This class defines the Node for the linear probe method
     #key (movie title or quote we will hash)
     #record: MovieRecord from Datareader
 class Node:
@@ -34,67 +33,80 @@ class Node:
         self.key = key
         #We are going to have a list of all the record items from the reader
         self.records = [record]
-        self.next = None
+        #self.next = None #commenting out for Linear Probing
+
+#iteration 06, bad hash 
+#the same bad hash as linkedlist1:
+def badHashFunction(key, tableSize):
+    return len(key) % tableSize
 
 
-#this is the final linked list iteration
-#For this one I thought of starting with more variation by starting with multiplying the
-#index by the order of key for each one. it wasn't great at first so I started by adding
-#1, and I got a better result, then I tried +2 and got better, then +3 and got even better
-#then +4 got worse so I stuck to 3
+#I then modulus by len(hashtable) to ensure it's in range
+def linearProbeHash(hashTable, key, record, stats):
+    index = badHashFunction(key, len(hashTable))
 
-#I then modulus by tablesize to ensure it's in range
-def finalListHashFunction(key, tableSize):
+    # if empty, insert immediately
+    if hashTable[index] is None:
+        hashTable[index] = Node(key, record)
+        return
 
-    if key == "":
-        return 0
+    # otherwise probe forward
+    while hashTable[index] is not None:
+        stats.collisions += 1
 
-    sumOfChars = 0
-    for i in range(len(key)):
-        sumOfChars += (i+3) * ord(key[i])
+        if hashTable[index].key == key:
+            hashTable[index].records.append(record)
+            return
 
-    return sumOfChars % tableSize
+        index = (index + 1) % len(hashTable)
+
+    hashTable[index] = Node(key, record)
 
 # This function inserts a record into the hash table using linked list chaining
 # Parameters:
 #   hashTable: the table being built
 #   key: the movie title or quote used as the key
 #   record: the MovieRecord object from DataReader
-def linkedListHash(hashTable, key, record):
-    index = finalListHashFunction(key, len(hashTable))
+# def linkedListHash(hashTable, key, record):
+#     index = finalListHashFunction(key, len(hashTable))
 
-    if hashTable[index] is None:
-        hashTable[index] = Node(key, record)
-        return
+#     if hashTable[index] is None:
+#         hashTable[index] = Node(key, record)
+#         return
 
-    current = hashTable[index]
+#     current = hashTable[index]
 
-    #collision adder
-    while current is not None:
-        curStats.collisions += 1
+#     #collision adder
+#     while current is not None:
+#         curStats.collisions += 1
 
-        if current.key == key:
-            current.records.append(record)
-            return
+#         if current.key == key:
+#             current.records.append(record)
+#             return
 
-        if current.next is None:
-            current.next = Node(key, record)
-            return
+#         if current.next is None:
+#             current.next = Node(key, record)
+#             return
 
-        current = current.next
+#         current = current.next
+
+
+
+
 
 
 
 
 #Using linkedlist for title and quote
 
-print("iteration 04: Final linked list")
+print("iteration 05: bad linear probe")
 #title as key
 print("Title as Key")
 curStats.startTime()
 
 for record in data:
-    linkedListHash(titleHashTable, record.movie_title, record)
+    if record.movie_title != "":
+        linearProbeHash(titleHashTable, record.movie_title, record, curStats)
 
 curStats.endTime()
 
@@ -106,8 +118,9 @@ curStats = HashStatistics()
 curStats.startTime()
 
 for record in data:
-    linkedListHash(titleHashTable, record.quote, record)
+    if record.quote != "":
+        linearProbeHash(quoteHashTable, record.quote, record, curStats)
 
 curStats.endTime()
 
-curStats.printStats(titleHashTable)
+curStats.printStats(quoteHashTable)
