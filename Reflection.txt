@@ -2,6 +2,22 @@
 #HashSomethingOut HW 4-2
 #Reflections
 
+Iteration 1 had awful efficieny with wasted buckets (roughly only a percent used) and so many collisions.
+the method was just using the length of the title/quote modulus the list lenght. My second iteration which
+won't count is using order as a function. This one worked a lot better with 3000-4000 less wasted buckets
+and collisions orders of magnitude lower.
+
+The third linked list was markedly better. I used the basics of iteration 2, but I both multiplied
+the sum or characters by the first character, and then did a +- for odd/even from the middle index of the length
+of the hash table. I then modulused that by the length of the hash table to ensure it was in range. The result
+for title was remarkably better. Only half the buckets were wasted and just under 10k collisions.
+For movie quote, which understandably can have a lot more variation with the length, wasted buckets fell to
+~2700. Remarkably more efficient and the collisions are down too. Time efficiency was a bit worse, but there was more
+to the funciton. 
+
+
+
+----------------------------------------------------------------------------------
 Iteration 1: the Bad, branch: movieTitle Bad
 
 Misnomer since I was planning on multiple commits for each iteration, but I'm just passing in the same 
@@ -44,3 +60,26 @@ Total Buckets: 15000
 Wasted Buckets: 10192
 Collisions: 73260
 Table time: 0.06971907615661621
+
+-----------------------------------------------------------
+Iteration 3: evenBetterHashFunction
+for this one I wanted more variance so I started with the idea of multiplying by whatever
+the value of the first character was (if it existed)
+
+then I thought I'd vary it a bit more by multiplying by the ord() of the first character
+I then thought I could vary that more by checking to see if it's even or odd. if even Information
+subtract from the midpoint and if odd I add. This allowed for a better spread
+
+iteration 03: Even Better linked list
+Title as Key
+Total Buckets: 15000
+Wasted Buckets: 7329
+Collisions: 9878
+Table time: 0.0472109317779541
+
+
+Quote as Key
+Total Buckets: 15000
+Wasted Buckets: 2726
+Collisions: 18837
+Table time: 0.06874704360961914

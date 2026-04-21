@@ -6,7 +6,7 @@
 #Last Edited 4/20/26
 #Sorry for the late. Been crazy couple of weeks.
 
-#Iteration 2: the Better table - see academic honesty note below
+#Iteration 3: the even Better linked list table 
 
 from HashStatistics import HashStatistics
 from DataReader import loadData
@@ -20,7 +20,6 @@ curStats = HashStatistics()
 
 
 #Defining the initial hash table sizes for title hash and quote hash tables
-#They are the size of qty rows in this iteration to be the inefficient method
 titleHashTable = [None] * 15000
 quoteHashTable = [None] * 15000
 
@@ -38,17 +37,30 @@ class Node:
         self.next = None
 
 
-#this is the first iteration of the hash function made intentionally bad
-#it takes the string for the key (movie or quote) and hashes into bucket index
-#in this case it's the length of the string % length of table to ensure it's within table bounds
-def betterHashFunction(key, tableSize):
-    """Academic Honesty: So i was sick the day you went over this in class 
-    and this is the general method I saw on todo. I'm doing another improvement that required because
-    I found this method online, but I wanted honesty in how I know https://www.w3schools.com/python/python_dsa_hashtables.asp """
+#this is the third iteration
+#this uses the ord of last one but then multiplies by the key of the first value for better variance
+#My idea here is to go from the midpoint for better spread
+# If that sum is even  I subtract that from the midpoint of the table
+#if that sum is odd I then add to the midpoint of the table
+#I then modulus by tablesize to ensure it's in range
+def evenBetterHashFunction(key, tableSize):
+
+    #just to account for possibility of empty title/quote
+    if key == "":
+        return 0
+
     sumOfChars = 0
-    for char in key:
-        sumOfChars += ord(char)
+    for i in range(len(key)):
+        sumOfChars += (i) * ord(key[i])
+
+    if sumOfChars % 2 == 0:
+        sumOfChars = tableSize//2 - sumOfChars
+
+    else:
+        sumOfChars = tableSize//2 + sumOfChars
+
     return sumOfChars % tableSize
+
 
 # This function inserts a record into the hash table using linked list chaining
 # Parameters:
@@ -56,7 +68,7 @@ def betterHashFunction(key, tableSize):
 #   key: the movie title or quote used as the key
 #   record: the MovieRecord object from DataReader
 def linkedListHash(hashTable, key, record):
-    index = betterHashFunction(key, len(hashTable))
+    index = evenBetterHashFunction(key, len(hashTable))
 
     if hashTable[index] is None:
         hashTable[index] = Node(key, record)
@@ -81,9 +93,9 @@ def linkedListHash(hashTable, key, record):
 
 
 
-#Using iteration 1 for title and quote
+#Using linkedlist for title and quote
 
-print("Better linked list: sum ord(char)")
+print("iteration 03: Even Better linked list")
 #title as key
 print("Title as Key")
 curStats.startTime()
