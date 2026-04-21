@@ -83,3 +83,24 @@ Total Buckets: 15000
 Wasted Buckets: 2726
 Collisions: 18837
 Table time: 0.06874704360961914
+
+--------------------------------------------------
+iteration 4: final linked hash:
+even better for this one. Idea was to start with the index multiplied by the ord(index)
+but it was bad so i kept adding one to the index and it got better till +3 then got worse at +4
+so i left it at +3
+
+time is more complex than the last but wasted buckets and collisions are down. This is best one
+
+Title as Key
+Total Buckets: 15000
+Wasted Buckets: 7188
+Collisions: 9169
+Table time: 0.059093475341796875
+
+
+Quote as Key
+Total Buckets: 15000
+Wasted Buckets: 2600
+Collisions: 18669
+Table time: 0.08672595024108887
