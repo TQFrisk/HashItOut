@@ -6,7 +6,7 @@
 #Last Edited 4/20/26
 #Sorry for the late. Been crazy couple of weeks.
 
-#Iteration 3: the even Better linked list table 
+#Iteration 4: the even final linked list hash table 
 
 from HashStatistics import HashStatistics
 from DataReader import loadData
@@ -37,30 +37,23 @@ class Node:
         self.next = None
 
 
-#this is the third iteration
-#this uses the ord of last one but then multiplies by the key of the first value for better variance
-#My idea here is to go from the midpoint for better spread
-# If that sum is even  I subtract that from the midpoint of the table
-#if that sum is odd I then add to the midpoint of the table
-#I then modulus by tablesize to ensure it's in range
-def evenBetterHashFunction(key, tableSize):
+#this is the final linked list iteration
+#For this one I thought of starting with more variation by starting with multiplying the
+#index by the order of key for each one. it wasn't great at first so I started by adding
+#1, and I got a better result, then I tried +2 and got better, then +3 and got even better
+#then +4 got worse so I stuck to 3
 
-    #just to account for possibility of empty title/quote
+#I then modulus by tablesize to ensure it's in range
+def finalListHashFunction(key, tableSize):
+
     if key == "":
         return 0
 
     sumOfChars = 0
     for i in range(len(key)):
-        sumOfChars += (i) * ord(key[i])
-
-    if sumOfChars % 2 == 0:
-        sumOfChars = tableSize//2 - sumOfChars
-
-    else:
-        sumOfChars = tableSize//2 + sumOfChars
+        sumOfChars += (i+3) * ord(key[i])
 
     return sumOfChars % tableSize
-
 
 # This function inserts a record into the hash table using linked list chaining
 # Parameters:
@@ -68,7 +61,7 @@ def evenBetterHashFunction(key, tableSize):
 #   key: the movie title or quote used as the key
 #   record: the MovieRecord object from DataReader
 def linkedListHash(hashTable, key, record):
-    index = evenBetterHashFunction(key, len(hashTable))
+    index = finalListHashFunction(key, len(hashTable))
 
     if hashTable[index] is None:
         hashTable[index] = Node(key, record)
@@ -95,7 +88,7 @@ def linkedListHash(hashTable, key, record):
 
 #Using linkedlist for title and quote
 
-print("iteration 03: Even Better linked list")
+print("iteration 04: Final linked list")
 #title as key
 print("Title as Key")
 curStats.startTime()
