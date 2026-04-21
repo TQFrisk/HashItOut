@@ -35,15 +35,22 @@ class Node:
         self.records = [record]
         #self.next = None #commenting out for Linear Probing
 
-#iteration 06, bad hash 
-#the same bad hash as linkedlist1:
-def badHashFunction(key, tableSize):
-    return len(key) % tableSize
+#iteration 06, better hash for linear probe
+#using the best version I had for linkedlist
+def betterHashFunction(key, tableSize):
+    sumOfChars = 0
+    for i in range(len(key)):
+        sumOfChars += (i + 3) * ord(key[i])
+    return sumOfChars % tableSize
 
 
-#I then modulus by len(hashtable) to ensure it's in range
+#Inserts a record into the hash table using linear probing
+#Parameters:
+#   hashtable: the hashtable made in beginning
+#   key: movie tite/quote as string
+#   record: MovieRecord
 def linearProbeHash(hashTable, key, record, stats):
-    index = badHashFunction(key, len(hashTable))
+    index = betterHashFunction(key, len(hashTable))
 
     # if empty, insert immediately
     if hashTable[index] is None:
@@ -99,7 +106,7 @@ def linearProbeHash(hashTable, key, record, stats):
 
 #Using linkedlist for title and quote
 
-print("iteration 05: bad linear probe")
+print("iteration 06: good linear probe")
 #title as key
 print("Title as Key")
 curStats.startTime()
