@@ -1,0 +1,25 @@
+#Thomas Frisk
+#HashSomethingOut HW 4-2
+#Reflections
+
+Iteration 1: the Bad, branch: movieTitle Bad
+
+Misnomer since I was planning on multiple commits for each iteration, but I'm just passing in the same 
+Information so it doesn't make sense to make one for title and one for quote.
+
+This is a linked list hash table. 
+for iteration 1, both hash table sizes are 15000 for the 15000 records in the .csv
+
+Title as Key
+Total Buckets: 15000
+Wasted Buckets: 14893
+Collisions: 2297776
+Table time: 0.32596588134765625
+
+Quote as Key
+Total Buckets: 15000
+Wasted Buckets: 14892
+Collisions: 9868809
+Table time: 1.1029706001281738
+
+---------------------------------------------------------
