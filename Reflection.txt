@@ -23,3 +23,24 @@ Collisions: 9868809
 Table time: 1.1029706001281738
 
 ---------------------------------------------------------
+Iteration 2: the imprvoed, branch linkedListBetter
+
+Academic honesty, was sick as hash functions were defined in class so I looked online and
+found this function at https://www.w3schools.com/python/python_dsa_hashtables.asp
+
+I did not know things like ord() previously and I'm not counting this one towards grade,
+merely academic honesty how I learned functions to try to do later hash functions
+
+Better linked list: sum ord(char)
+
+Title as Key
+Total Buckets: 15000
+Wasted Buckets: 11249
+Collisions: 32188
+Table time: 0.03874492645263672
+
+Quote as Key
+Total Buckets: 15000
+Wasted Buckets: 10192
+Collisions: 73260
+Table time: 0.06971907615661621
