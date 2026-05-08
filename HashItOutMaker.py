@@ -32,7 +32,8 @@ class Node:
     def __init__(self, key, record):
         self.key = key
         #We are going to have a list of all the record items from the reader
-        self.records = [record]
+        #self.records = [record] #this is what I messed up, i had it as a list
+        self.records = record
         #self.next = None #commenting out for Linear Probing
 
 #iteration 06, bad hash 
@@ -50,16 +51,12 @@ def linearProbeHash(hashTable, key, record, stats):
         hashTable[index] = Node(key, record)
         return
 
-    # otherwise probe forward
+    #probe
     while hashTable[index] is not None:
         stats.collisions += 1
-
-        if hashTable[index].key == key:
-            hashTable[index].records.append(record)
-            return
-
         index = (index + 1) % len(hashTable)
 
+    # insert at empty slot
     hashTable[index] = Node(key, record)
 
 # This function inserts a record into the hash table using linked list chaining
