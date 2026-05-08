@@ -9,15 +9,22 @@ Also had a hospital trip tonight so I rushed a bit with the merges and forgot to
 
 
 Overall, mostly had what I expected. The bad iterations: iteration 01 and 05 were abysmal. For the linked list, it was 99% wasted space and the time on the bad linear was 19-20x worse
-
+--------------------------------------------------------------
+REVISION: with the exception of the time for movie linear probe in 6th iteration which I suppose makes sense since less variation so more collisions
+-------------------------------------------------------------
 The second iteration of my linked list was how i learned this since I wasn't in class. I included an extra iteration because of this and i cited my source. I didn't know what the ord() function was, didn't know if it was covered in class. It was a dramatic improvement by about 33% better wasted space efficiency. The collisions were also down by orders of magnitude.
 
 The third iteration for linked list was weird. My thought process was that whatever sum I had for the characters--even with the ord()--would bunch a lot in the same areas. So my sleep deprived idea was to then split to + and - from the midpoint. I also multiplied those values by the ord() of the first character for a better spread if it existed. Thought that would push the mean towards the center and then have a nice spread. The stats were improved but realistically that's not really what's happening in the math. Also if all the odd values are added and evens minused then I'd also get a lot of even buckets empty above and odd below. It makes sense given ~half the buckets for it were wasted for title. Quote probably got to high enough values to wrap around a bit with the modulus which is why they worked better
 
 Fourth iteration was an improvement on the one that made the most sense and was the best. Third wasn't really one that made sense so it was a version of improvement of the one i found online. I changed it up a bit to have an addition of +3 to whatever the ith value was because when i did +0 to +5 that was the highest so that was my improvement.
 
-fifth iteration was bad linear probing and i used the initial bad hash method for that and it was abysmal as stated before
+fifth iteration was bad linear probing and i used the initial bad hash method for that and it was abysmal as stated before. REVISION: this time the linear probe method worked so there were zero wasted buckets but it took about 15 and 19 seconds respectfully to run
+------------------------------------------------------------
+REVISION
+6th iteration was great for the quotes but not great for movie titles. I assume it's because of all the collisions given they're just less varied than quotes cam be. Movie titles took about 1.5 seconds which while having no wasted space is good and a substantive improvement over the bad linear probe, it is still a lot more time than I would like given that it's worse for time than the worst linked list method I had for making the quote table. 
+---------------------------------------------------------
 
+ORIGINAL
 6th iteration was by far the best. It used the best method from the linked list and had phenomenal stats overall. Just about double the time of the best linked list for title and the wasted buckets at worse down to 24% and far far better for quotes
 
 
@@ -113,7 +120,21 @@ Collisions: 18669
 Table time: 0.08672595024108887
 
 -------------------------------
-Iteration 5: bad linear
+iteration 05: bad linear probe (revised)
+Title as Key
+Total Buckets: 15000
+Wasted Buckets: 0
+Collisions: 112195045
+Table time: 15.905792713165283
+Quote as Key
+Total Buckets: 15000
+Wasted Buckets: 0
+Collisions: 112225979
+Table time: 14.79779863357544
+
+
+_           _          _             _ 
+Iteration 5: bad linear (original)
 
 Time was abysmal for this one. So bad, but the wasted buckets was so few
 
@@ -131,7 +152,25 @@ Collisions: 111142876
 Table time: 19.86230754852295
 
 --------------------------------
-iteration 6: good linear
+iteration 06: good linear probe (revision)
+Title as Key
+Total Buckets: 15000
+Wasted Buckets: 0
+Collisions: 8190270
+Table time: 1.5321404933929443
+
+Quote as Key
+Total Buckets: 15000
+Wasted Buckets: 0
+Collisions: 1964386
+Table time: 0.39317917823791504
+
+
+
+_        _            _           _ 
+
+
+iteration 6: good linear (original)
 
 I used my best linked list for this and it was the best overall for time and for wasted buckets
 
